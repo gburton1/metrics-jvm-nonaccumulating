@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'maven'
+    id "com.jfrog.bintray" version "1.1"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'io.dropwizard.metrics:metrics-core:3.1.0'
+    compile 'io.dropwizard.metrics:metrics-jvm:3.1.0'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile(group: 'org.mockito', name: 'mockito-all', version: '1.9.5')
+}
+
+//publish a jar for Java source files
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+//publish a jar for JavaDocs
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+task wrapper(type: Wrapper) {
+    description = "Generates a new Gradle Wrapper"
+    group = "build"
+    gradleVersion = '2.4'
+}
