@@ -1,4 +1,4 @@
-package metrics.jvm;
+package com.heapwhisperer.metrics.jvm;
 
 import com.codahale.metrics.Gauge;
 import com.codahale.metrics.Metric;
